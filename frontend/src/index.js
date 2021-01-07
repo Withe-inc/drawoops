@@ -7,7 +7,7 @@ import { BrowserRouter,  Route, Switch } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-<BrowserRouter>
+<BrowserRouter basename = {'/drawoops'}>
         <App />
     </BrowserRouter>, 
   document.getElementById('root')
