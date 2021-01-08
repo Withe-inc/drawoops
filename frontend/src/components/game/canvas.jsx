@@ -1,8 +1,10 @@
 import React, { useRef,  useEffect, useState, useCallback }from 'react';
-
+import './canvas.scss'
 //https://morioh.com/p/bbafb569e6a1
 //https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258
 //https://medium.com/@martin.crabtree/react-creating-an-interactive-canvas-component-e8e88243baf6
+//https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events/Using_Pointer_Events
+
 /**
  * Basic canvas for drawing
  * draw black line when mouse pressed
@@ -21,20 +23,38 @@ const Canvas = (props) =>{
 	const [isPainting, setIsPainting] = useState(false)
 	const [mousePosition, setMousePosition] = useState({ x: null, y: null })
 	// get coordinate on canvas
+	// let ongoingTouches = new Array();
 	const getCoordinates = (event)=>{
 		const canvas = canvasRef.current
 		if (!canvas)return
-		console.log(event)
-		console.log({x:event.clientX-canvas.offsetLeft, y:event.clientY-canvas.offsetTop})
+		
+		//console.log({x:event.clientX-canvas.offsetLeft, y:event.clientY-canvas.offsetTop})
 		return {x:event.clientX-canvas.offsetLeft, y:event.clientY-canvas.offsetTop}
 
 	}
 
+	// const ongoingTouchIndexById = (idToFind) {
+	// 	for (var i = 0; i < ongoingTouches.length; i++) {
+	// 	  var id = ongoingTouches[i].identifier;
+	  
+	// 	  if (id == idToFind) {
+	// 		return i;
+	// 	  }
+	// 	}
+	// 	return -1;    // not found
+	//   }
+
 	//update mouse position when mouse pressed
 	const startPaint = useCallback((event) => {
 		const coordinates = getCoordinates(event);
+
+		//regitster touch
+		// ongoingTouches.push(copyTouch(event))
+		if (event && event.preventDefault )event.preventDefault();
+		if (event && event.stopPropagation) event.stopPropagation(); 
 		if (coordinates){
 			setIsPainting(true)
+			console.log('start')
 			setMousePosition(coordinates)
 		}
 
@@ -43,7 +63,11 @@ const Canvas = (props) =>{
 	const paint = useCallback((event)=>{
 		if (isPainting){
 			const newMousePosition = getCoordinates(event);
-			if (mousePosition && newMousePosition) {
+			if (event && event.preventDefault )event.preventDefault();
+			if (event && event.stopPropagation) event.stopPropagation(); 
+			// const idx = ongoingTouchIndexById(event.pointerId);
+			if (mousePosition && newMousePosition ) {
+				console.log("painting")
 				drawLine(mousePosition, newMousePosition);
 				setMousePosition(newMousePosition);
 			}
@@ -54,9 +78,9 @@ const Canvas = (props) =>{
 	useEffect(() => {
 		const canvas = canvasRef.current
 		if (!canvas) return
-		canvas.addEventListener('mousedown', startPaint)
+		canvas.addEventListener('pointerdown', startPaint)
 		return () => {
-            canvas.removeEventListener('mousedown', startPaint);
+            canvas.removeEventListener('pointerdown', startPaint);
         };
 
 	},[startPaint])
@@ -64,17 +88,15 @@ const Canvas = (props) =>{
 	useEffect(() => {
 		const canvas = canvasRef.current;
         if (!canvas) return;
-
-        
-        canvas.addEventListener('mousemove', paint);
+		canvas.addEventListener('pointermove', paint)
         return () => {
-            canvas.removeEventListener('mousemove', paint);
+            canvas.removeEventListener('pointermove', paint);
         };
 	}, [paint]);
 	
 	const drawLine = (mousePosition, newMousePosition)=>{
 		const canvas = canvasRef.current;
-		if (!canvas)  return;
+		if (!canvas) {console.log("not ca");return;}
 		const context = canvas.getContext('2d')
 		if (context) {
             context.strokeStyle = 'black';
@@ -89,17 +111,19 @@ const Canvas = (props) =>{
 	}
 
 	const exitPaint = useCallback(() => {
+		console.log("leave, up")
         setIsPainting(false);
 	}, []);
 	
 	useEffect(() => {
 		const canvas = canvasRef.current;
         if (!canvas) return;
-        canvas.addEventListener('mouseup', exitPaint);
-        canvas.addEventListener('mouseleave', exitPaint);
+        // canvas.addEventListener('pointerup', exitPaint);
+        canvas.addEventListener('pointercancel', exitPaint);
         return () => {
-            canvas.removeEventListener('mouseup', exitPaint);
-            canvas.removeEventListener('mouseleave', exitPaint);
+            // canvas.removeEventListener('pointerup', exitPaint);
+			canvas.removeEventListener('pointercancel', exitPaint);
+			
         };
 	}, [exitPaint]);
 	
