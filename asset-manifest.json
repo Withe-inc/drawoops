@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/drawoops/static/css/main.c8856964.chunk.css",
-    "main.js": "/drawoops/static/js/main.85539ce0.chunk.js",
-    "main.js.map": "/drawoops/static/js/main.85539ce0.chunk.js.map",
+    "main.js": "/drawoops/static/js/main.a3115d96.chunk.js",
+    "main.js.map": "/drawoops/static/js/main.a3115d96.chunk.js.map",
     "runtime-main.js": "/drawoops/static/js/runtime-main.f3264293.js",
     "runtime-main.js.map": "/drawoops/static/js/runtime-main.f3264293.js.map",
     "static/js/2.1df92589.chunk.js": "/drawoops/static/js/2.1df92589.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.f3264293.js",
     "static/js/2.1df92589.chunk.js",
     "static/css/main.c8856964.chunk.css",
-    "static/js/main.85539ce0.chunk.js"
+    "static/js/main.a3115d96.chunk.js"
   ]
 }
