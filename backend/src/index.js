@@ -13,6 +13,7 @@ const io = require('socket.io')(http, {
   }
 });
 
+// const game = require('game')
 
 var path = require('path');
 
@@ -26,7 +27,17 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('connection 1');
+});
+
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg);
+    io.emit('hell', 'brother');
+    // io.emit('hell', msg);
+    socket.emit('hell', msg)
+  });
+  console.log('connection 2')
 });
 
 // server.listen() method creates a listener on the specified port or path

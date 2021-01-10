@@ -6,19 +6,56 @@ Socket.io consists of two parts:
 During development, socket.io serves the client automatically for us, 
 as we’ll see, so for now we only have to install one module: socket.io
 
+# event emission / listening -- https://socket.io/docs/v3/emitting-events/#Basic-emit
+
 # io -- https://socket.io/docs/v3/client-api/#IO
 
 Exposed as the io namespace in the standalone build, or the result of calling 
 require('socket.io-client')
 
-io is a Socket.IO server instance
+  io is a Socket.IO server instance
 
 # namespace -- https://socket.io/docs/v3/namespaces/index.html
 
 A Namespace is a communication channel that allows you to split the logic of 
 your application over a single shared connection
 
-# socket instance -- https://socket.io/docs/v3/server-socket-instance/
+# socket#handshake
 
-Socket#id -- Each new connection is assigned a random 20-characters identifier.
+This object contains some details about the handshake that happens at the 
+beginning of the Socket.IO session
+
+{
+  headers: /* the headers of the initial request */
+  query: /* the query params of the initial request */
+  auth: /* the authentication payload */
+  time: /* the date of creation (as string) */
+  issued: /* the date of creation (unix timestamp) */
+  url: /* the request URL string */
+  address: /* the ip of the client */
+  xdomain: /* whether the connection is cross-domain */
+  secure: /* whether the connection is secure */
+}
+
+# socket#id -- https://socket.io/docs/v3/server-socket-instance/
+
+Each new connection is assigned a random 20-characters identifier.
 This identifier is synced with the value on the client-side
+
+Upon creation, the Socket joins the room identified by its own id.
+
+# socket#rooms -- https://socket.io/docs/v3/rooms/
+
+A room is an arbitrary channel that sockets can join and leave. 
+It can be used to broadcast events to a subset of clients
+
+You can call join to subscribe the socket to a given channel.
+And then simply use to or in (they are the same) when broadcasting or emitting.
+You can emit to several rooms at the same time.
+
+In that case, a union is performed: every socket that is at least in one of the 
+rooms will get the event once (even if the socket is in two or more rooms).
+
+Each Socket in Socket.IO is identified by a random, unguessable, unique 
+identifier Socket#id. For your convenience, each socket automatically joins a 
+room identified by its own id.

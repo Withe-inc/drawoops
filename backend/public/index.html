@@ -69,6 +69,26 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io();
+
+    // Document method getElementById() returns an Element object representing
+    // the element whose id property matches the specified string
+    var messages = document.getElementById('messages');
+    var form = document.getElementById('form');
+    var input = document.getElementById('input');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (input.value) {
+        socket.emit('chat message', input.value);
+        input.value = '';
+      }
+    });
+    socket.on('hell', (e) => {
+      var item = document.createElement('li');
+      item.textContent = e;
+      messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+    })
   </script>
 </body>
 
