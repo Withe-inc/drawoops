@@ -1,0 +1,29 @@
+A-Z Guide
+
+# Middleware - https://expressjs.com/en/guide/using-middleware.html
+
+Middleware functions are functions that have access to the request object 
+(req), the response object (res), and the next middleware function in
+the application’s request-response cycle. 
+The next middleware function is commonly denoted by a variable named next.
+
+Middleware functions can perform the following tasks:
+
+Execute any code.
+Make changes to the request and the response objects.
+End the request-response cycle.
+Call the next middleware function in the stack.
+
+# Response Object - https://expressjs.com/en/4x/api.html#res
+
+The res object represents the HTTP response that an Express app sends 
+when it gets an HTTP request.
+
+# Request Object - https://expressjs.com/en/4x/api.html#req 
+
+The req object represents the HTTP request and has properties for the request 
+query string, parameters, body, HTTP headers, and so on.
+
+
+
+

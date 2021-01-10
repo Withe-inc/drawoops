@@ -1,0 +1,36 @@
+https://www.htmlquick.com/tutorials/document-structure.html
+
+The basic structure of any HTML document consists of the following sections 
+or elements:
+
+The DTD [document type definition] (!DOCTYPE declaration).
+The main container (html element).
+The head section (head element).
+The body section (body element).
+
+# <html> </html>
+
+The content of this element can be further divided into two sections: 
+the head and the body
+
+# <head> </head>
+
+The head section is a container for metadata about the document. 
+This metadata can be classified in five categories according to the element used.
+
+Five categories:
+* title
+* style
+* Client-side scripts declared with the <script> element
+* Meta statements
+* Relational information inserted with <link> element
+
+The information declared in this block will be loaded, because of the order of 
+precedence, before the elements in the body.
+
+# <body> </body>
+
+The body of a document is simply the container for its renderable part. 
+This is the place to start writing your content (adding headings, paragraphs, 
+images, etc.) and the section your visitors will immediately access when the 
+page is loaded.

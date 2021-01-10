@@ -1,0 +1,19 @@
+{
+  "name": "drawoops",
+  "version": "0.0.1",
+  "description": "real-time multiplayer drawing game",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Withe-inc/drawoops.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Withe-inc/drawoops/issues"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "socket.io": "^3.0.5"
+  }
+}
