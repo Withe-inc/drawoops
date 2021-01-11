@@ -27,6 +27,7 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  socket.emit('connection', null);
 });
 
 // server.listen() method creates a listener on the specified port or path
