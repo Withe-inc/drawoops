@@ -11,7 +11,9 @@ import socketClient from "socket.io-client";
 
 const SERVER = "http://127.0.0.1:8080";
 function App() {
+  console.log("app")
   var socket = socketClient(SERVER);
+  console.log(socket)
   socket.on('connection', () => {
     console.log(`I'm connected with the back-end`);
   });

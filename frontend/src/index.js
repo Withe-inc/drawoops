@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import './style/index.css';
 import App from './App';
 
-import { BrowserRouter,  Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-<BrowserRouter basename = {'/drawoops'}>
-        <App />
-    </BrowserRouter>, 
+  <BrowserRouter basename="drawoops">
+    <App />
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

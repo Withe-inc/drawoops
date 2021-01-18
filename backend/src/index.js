@@ -33,6 +33,7 @@ app.get('/*', (req, res) => {
 io.sockets.on('connection', (socket) => {
   let user = new Game(io, socket, data);
   user.gameListeners()
+  socket.emit('connection', null);
 });
 
 // app.get('./:id', (req, res) => {
