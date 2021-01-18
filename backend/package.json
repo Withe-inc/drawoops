@@ -1,0 +1,27 @@
+{
+  "name": "drawoops",
+  "version": "0.0.1",
+  "description": "real-time multiplayer drawing game",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Withe-inc/drawoops.git"
+  },
+  "scripts": {
+    "build": "babel src -d build && node ./build/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Withe-inc/drawoops/issues"
+  },
+  "dependencies": {
+    "-": "0.0.1",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "socket.io": "^3.0.5"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}

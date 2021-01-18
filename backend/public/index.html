@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Socket.IO chat</title>
+  <style>
+    body {
+      margin: 0;
+      padding-bottom: 3rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    #form {
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.25rem;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      height: 3rem;
+      box-sizing: border-box;
+      backdrop-filter: blur(10px);
+    }
+
+    #input {
+      border: none;
+      padding: 0 1rem;
+      flex-grow: 1;
+      border-radius: 2rem;
+      margin: 0.25rem;
+    }
+
+    #input:focus {
+      outline: none;
+    }
+
+    #form>button {
+      background: #333;
+      border: none;
+      padding: 0 1rem;
+      margin: 0.25rem;
+      border-radius: 3px;
+      outline: none;
+      color: #fff;
+    }
+
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #messages>li {
+      padding: 0.5rem 1rem;
+    }
+
+    #messages>li:nth-child(odd) {
+      background: #efefef;
+    }
+  </style>
+</head>
+
+<body>
+  <ul id="messages"></ul>
+  <div id="conditional"> </div>
+  <form id="host" action="">
+    <label id='hostgame'>make room</label>
+    <input id="hostinput" autocomplete="off" /><button>Send</button>
+  </form>
+  <!-- <form id="room" action="">
+    <label>join</label>
+    <input id="input1" autocomplete="off" /><button>Send</button>
+  </form> -->
+  <form id="form" action="">
+    <input id="input" autocomplete="off" /><button>Send</button>
+  </form>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+
+    var homepage = document.createElement("h1");
+    homepage.textContent = "home"
+
+    var room = document.createElement("h1");
+    room.textContent = "room"
+
+    var socket = io();
+
+    // Document method getElementById() returns an Element object representing
+    // the element whose id property matches the specified string
+
+    if (window.location.pathname != '/') {
+      socket.emit('enter room', window.location.pathname);
+      document.body.appendChild(room)
+
+    } else {
+      document.body.appendChild(homepage);
+
+
+    };
+    var messages = document.getElementById('messages');
+    var form = document.getElementById('form');
+    var input = document.getElementById('input');
+    // var room = document.getElementById('room')
+    // var roomInput = document.getElementById('input1')
+    // var roomID = ""
+    var con_body = document.getElementById('conditional')
+    var Host = document.getElementById("host")
+    var hostin = document.getElementById('hostinput')
+
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (input.value) {
+        socket.emit('chat message', {
+          message: input.value
+        }
+        );
+        input.value = '';
+      } else window.alert(
+        "roomID or message is empty"
+      )
+    })
+
+    Host.addEventListener('submit', function (e) {
+      e.preventDefault();
+      // if (hostin.value) {
+      console.log('create room html')
+      console.log(socket.id)
+      socket.emit('host game');
+      // }
+      // roomID = hostin.value;
+    })
+
+
+
+    // room.addEventListener('submit', function (e) {
+    //   e.preventDefault();
+    //   if (roomInput.value) {
+    //     console.log('enter room 21`````tml')
+    //     console.log(socket.id)
+    //     roomID = roomInput.value;
+    //     console.log('sending room number', roomID)
+    //     console.log("socket id", socket.id)
+    //     socket.emit('enter room', roomID);
+    //     input.value = '';
+    //   }
+    // })
+
+
+
+    socket.on('new room id', (e) => {
+      var id = document.createElement('h1');
+      id.textContent = e;
+      Host.appendChild(id);
+      window.scrollTo(0, document.body.scrollHeight);
+    })
+
+    socket.on('metadata', (a1, a2) => {
+      console.log("room", a1);
+      console.log("player", a2);
+    })
+
+    socket.on('new message', (e) => {
+      var item = document.createElement('li');
+      item.textContent = e;
+      messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+    })
+  </script>
+</body>
+
+</html>
